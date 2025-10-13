@@ -23,8 +23,7 @@
     <aside class="sidebar">
         <div class="sidebar__top">
             <div class="profile">
-                <img src="pfp.jpg" alt="Muhammad Hassan"
-                    class="profile__avatar" />
+                <img src="pfp.jpg" alt="Muhammad Hassan" class="profile__avatar" />
                 <h1 class="profile__name">Muhammad Hassan</h1>
                 <p class="profile__title">PhD Candidate - Virginia Tech</p>
             </div>
@@ -34,6 +33,7 @@
                     <li><a href="#about" class="nav__link">About</a></li>
                     <li><a href="#research" class="nav__link">Research</a></li>
                     <li><a href="#publications" class="nav__link">Publications</a></li>
+                    <li><a href="#experience" class="nav__link">Work Experience</a></li>
                     <li><a href="#resume" class="nav__link">Resume</a></li>
                     <li><a href="#contact" class="nav__link">Contact</a></li>
                 </ul>
@@ -42,8 +42,8 @@
 
         <div class="sidebar__bottom">
             <div class="socials">
-                <a href="resume.pdf" class="socials__link" aria-label="CV" target="_blank"
-                    rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
+                <a href="resume.pdf" class="socials__link" aria-label="CV" target="_blank" rel="noopener noreferrer"><i
+                        class="fas fa-file-pdf"></i></a>
                 <a href="https://scholar.google.com/citations?user=fqTwNSYAAAAJ&hl=en" class="socials__link"
                     aria-label="Google Scholar" target="_blank" rel="noopener noreferrer"><i
                         class="fas fa-graduation-cap"></i></a>
@@ -69,6 +69,7 @@
         <a href="#about" class="mmenu__link">About</a>
         <a href="#research" class="mmenu__link">Research</a>
         <a href="#publications" class="mmenu__link">Publications</a>
+        <a href="#work-experience" class="mmenu__link">Work Experience</a>
         <a href="#resume" class="mmenu__link">Resume</a>
         <a href="#contact" class="mmenu__link">Contact</a>
     </div>
@@ -138,6 +139,79 @@
             </div>
         </section>
 
+        <!-- Work Experience Section -->
+        <section id="experience" class="section">
+            <div class="section__content scroll-fade">
+                <h2 class="section__title">Work Experience</h2>
+
+                <div class="timeline">
+                    <!-- Item 3 -->
+                    <article class="xp">
+                        <header class="xp__header">
+                            <h3 class="xp__role">Software Engineer</h3>
+                            <span class="xp__meta">Aerodyne Group • 2023 — 2024</span>
+                        </header>
+                        <ul class="xp__bullets">
+                            <li>Built a 2D/3D annotation interface for digital-twin models; optimized rendering
+                                pipeline.
+                            </li>
+                            <li>Integrated Three.js, Mapbox, and Nexus.js for synchronized transformations.</li>
+                        </ul>
+                        <div class="xp__tags">
+                            <span class="chip">Three.js</span><span class="chip">WebGL</span><span
+                                class="chip">Mapbox</span><span class="chip">Angular</span>
+                        </div>
+                    </article>
+
+                    <!-- Item 1 -->
+                    <article class="xp">
+                        <header class="xp__header">
+                            <h3 class="xp__role">Research Assistant, PL/Compilers Lab</h3>
+                            <span class="xp__meta">Virginia Tech • 2024 — Present</span>
+                        </header>
+                        <ul class="xp__bullets">
+                            <li>LLVM-based program analysis and constant-time transformations for secure compilation.
+                            </li>
+                            <li>Explored control-flow merging techniques in LLVM to improve symbolic execution
+                                efficiency and bug-detection robustness.</li>
+                        </ul>
+                        <div class="xp__tags">
+                            <span class="chip">LLVM</span>
+                            <span class="chip">KLEE</span>
+                            <span class="chip">Symbolic Execution</span>
+                            <span class="chip">Program
+                                Analysis</span>
+                        </div>
+                    </article>
+
+                    <article class="xp">
+                        <header class="xp__header">
+                            <h3 class="xp__role">Research Assistant</h3>
+                            <span class="xp__meta">Internet Security & Privacy Lab (LUMS) • 2022 — 2024</span>
+                        </header>
+
+                        <ul class="xp__bullets">
+                            <li>Evaluated source-code, binary, and container debloating techniques to analyze their
+                                impact on size, functionality, and security.</li>
+                            <li>First author of a paper on this work accepted at the IEEE Secure Development Conference
+                                ’24.</li>
+                        </ul>
+
+                        <div class="xp__tags">
+                            <span class="chip">Debloating</span>
+                            <span class="chip">Source Code</span>
+                            <span class="chip">Containers</span>
+                            <span class="chip">Benchmarking</span>
+                            <span class="chip">Security</span>
+                        </div>
+                    </article>
+
+
+                </div>
+            </div>
+        </section>
+
+
         <!-- Resume Section -->
         <section id="resume" class="section">
             <div class="section__content scroll-fade">
@@ -147,8 +221,7 @@
 
                 <div class="btn-row">
                     <!-- Opens PDF in a new tab -->
-                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer"
-                        class="btn btn--primary">View PDF</a>
+                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--primary">View PDF</a>
 
                 </div>
         </section>

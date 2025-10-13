@@ -138,3 +138,33 @@ a.link:hover{ color:var(--white); border-color:var(--gray-300); }
   background: var(--teal-400);
   border-radius: 2px;
 }
+
+
+/* Work Experience / Timeline */
+.timeline{
+  display:flex; flex-direction:column; gap:1rem;
+  border-left:2px solid var(--gray-700);
+  padding-left:1.25rem;
+}
+.xp{
+  position:relative;
+  background:var(--gray-800);
+  border:1px solid var(--gray-700);
+  border-radius:var(--radius);
+  padding:1rem 1.25rem;
+}
+.xp::before{
+  content:"";
+  position:absolute; left:-0.6rem; top:1.15rem;
+  width:0.75rem; height:0.75rem; border-radius:999px;
+  background:var(--teal-500);
+  box-shadow:0 0 0 3px rgba(20,184,166,.25);
+}
+.xp__header{
+  display:flex; align-items:baseline; justify-content:space-between; gap:.5rem; flex-wrap:wrap;
+}
+.xp__role{ font-size:1.05rem; color:var(--white); margin:0; }
+.xp__meta{ color:var(--gray-400); font-size:.9rem; }
+.xp__bullets{ margin:.5rem 0 0 1rem; }
+.xp__bullets li{ margin:.25rem 0; }
+.xp__tags{ margin-top:.6rem; display:flex; gap:.5rem; flex-wrap:wrap; }
