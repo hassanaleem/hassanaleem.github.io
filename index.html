@@ -4,241 +4,292 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Muhammad Hassan - PhD Candidate | Alt Design</title>
-
-    <!-- Fonts & Icons -->
+    <meta name="description"
+        content="Muhammad Hassan is a PhD student in Computer Science at Virginia Tech working on compilers, program analysis, symbolic execution, and software testing." />
+    <title>Muhammad Hassan | PhD Student in Computer Science</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Slab:wght@700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@500;600;700&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-    <!-- Site CSS -->
     <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body class="theme-dark">
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Sidebar / Header -->
-    <aside class="sidebar">
-        <div class="sidebar__top">
-            <div class="profile">
-                <img src="pfp.jpg" alt="Muhammad Hassan" class="profile__avatar" />
-                <h1 class="profile__name">Muhammad Hassan</h1>
-                <p class="profile__title">PhD Candidate - Virginia Tech</p>
-            </div>
-
-            <nav class="nav">
-                <ul class="nav__list">
-                    <li><a href="#about" class="nav__link">About</a></li>
-                    <li><a href="#research" class="nav__link">Research</a></li>
-                    <li><a href="#publications" class="nav__link">Publications</a></li>
-                    <li><a href="#experience" class="nav__link">Work Experience</a></li>
-                    <li><a href="#resume" class="nav__link">Resume</a></li>
-                    <li><a href="#contact" class="nav__link">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-
-        <div class="sidebar__bottom">
-            <div class="socials">
-                <a href="resume.pdf" class="socials__link" aria-label="CV" target="_blank" rel="noopener noreferrer"><i
-                        class="fas fa-file-pdf"></i></a>
-                <a href="https://scholar.google.com/citations?user=fqTwNSYAAAAJ&hl=en" class="socials__link"
-                    aria-label="Google Scholar" target="_blank" rel="noopener noreferrer"><i
-                        class="fas fa-graduation-cap"></i></a>
-                <a href="https://www.linkedin.com/in/hassanaleem1/" class="socials__link" aria-label="LinkedIn"
-                    target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/hassanaleem" class="socials__link" aria-label="GitHub" target="_blank"
-                    rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-            </div>
-            <p class="sidebar__copy">&copy; 2025 Muhammad Hassan</p>
-        </div>
-    </aside>
-
-    <!-- Mobile Header -->
-    <header class="mheader">
-        <h1 class="mheader__brand">Muhammad Hassan</h1>
-        <button id="mobile-menu-button" class="mheader__toggle" aria-label="Open menu">
-            <i class="fas fa-bars"></i>
-        </button>
+    <header class="site-header">
+        <a class="brand" href="#top" aria-label="Muhammad Hassan home">
+            <span class="brand__mark">MH</span>
+            <span>Muhammad Hassan</span>
+        </a>
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+            <a href="#about">About</a>
+            <a href="#news">News</a>
+            <a href="#research">Research</a>
+            <a href="#publications">Publications</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </nav>
     </header>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mmenu">
-        <a href="#about" class="mmenu__link">About</a>
-        <a href="#research" class="mmenu__link">Research</a>
-        <a href="#publications" class="mmenu__link">Publications</a>
-        <a href="#work-experience" class="mmenu__link">Work Experience</a>
-        <a href="#resume" class="mmenu__link">Resume</a>
-        <a href="#contact" class="mmenu__link">Contact</a>
-    </div>
-
-    <!-- Main Content -->
-    <main class="main">
-        <!-- About Section -->
-        <section id="about" class="section">
-            <div class="section__content scroll-fade">
-                <h2 class="section__title">About Me</h2>
-                <div class="prose">
-                    <p>
-                        I am a PhD candidate in <span class="accent">Computer Science</span> at Virginia Tech, under the
-                        supervision of Dr Kirshanthan Sundarajah. My research is centered on compilers,
-                        programming languages, and automated testing.
-                    </p>
-                    <p>
-                        I am driven by a passion for leveraging compiler and programming language techniques to unravel
-                        complex challenges within Computer Science. My academic journey began at Lahore University of
-                        Management Sciences, where I earned my B.S. in Computer Science.
-                    </p>
-                    <p>
-                        When I'm not immersed in research, I find balance through hiking and playing sports.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Research Section -->
-        <section id="research" class="section">
-            <div class="section__content scroll-fade">
-                <h2 class="section__title">Research</h2>
-                <p class="lede">
-                    My research lies at the intersection of compilers, programming languages, and automated software
-                    testing. I am passionate about making the code robust and secure, by finding bugs using automated
-                    testing techniques, and compiler transformations to ensure security.
+    <main id="main">
+        <section class="hero" id="top" aria-labelledby="hero-title">
+            <div class="hero__content">
+                <h1 id="hero-title">Muhammad Hassan</h1>
+                <p class="academic-title">
+                    PhD Student in Computer Science, Virginia Tech
                 </p>
-                <div class="card">
-                    <h3 class="card__title">Core Interests</h3>
-                    <div class="chips">
-                        <span class="chip">Compilers</span>
-                        <span class="chip">Programming Languages</span>
-                        <span class="chip">Automated Testing</span>
-                        <span class="chip">Software Verification</span>
-                        <span class="chip">Static Analysis</span>
-                    </div>
-                </div>
+                <p class="hero__lede">
+                    I study compiler and program-analysis techniques for improving software reliability, security, and
+                    test effectiveness, with current work in symbolic execution and constant-time transformations.
+                </p>
+                <p class="contact-line">
+                    <a href="mailto:mhassan01@vt.edu">mhassan01@vt.edu</a> ·
+                    <a href="https://scholar.google.com/citations?user=fqTwNSYAAAAJ&hl=en" target="_blank"
+                        rel="noopener noreferrer">Google Scholar</a> ·
+                    <a href="https://github.com/hassanaleem" target="_blank" rel="noopener noreferrer">GitHub</a> ·
+                    <a href="https://www.linkedin.com/in/hassanaleem1/" target="_blank"
+                        rel="noopener noreferrer">LinkedIn</a> ·
+                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+                </p>
+            </div>
+            <aside class="hero-card" aria-label="Profile photo">
+                <img src="pfp.jpg" alt="Portrait of Muhammad Hassan" class="profile-photo" />
+            </aside>
+        </section>
+
+        <section class="section" id="about" aria-labelledby="about-title">
+            <div class="section__header">
+                <p class="eyebrow">About</p>
+                <h2 id="about-title">I work on program analysis and compiler techniques for dependable software.</h2>
+            </div>
+            <div class="section__body prose">
+                <p>
+                    I am a PhD student in Computer Science at Virginia Tech, advised by
+                    <a href="https://kirshanthans.github.io/" target="_blank" rel="noopener noreferrer">Dr.
+                        Kirshanthan Sundararajah</a>.
+                    My research interests are in compilers, programming languages, software testing, and security, with
+                    an emphasis on techniques that make program behavior easier to analyze and validate.
+                </p>
+                <p>
+                    Before Virginia Tech, I completed my B.S. in Computer Science at Lahore University of Management
+                    Sciences, where I worked on software debloating and security evaluation. I am especially interested
+                    in research that combines principled compiler ideas with empirical systems evaluation.
+                </p>
             </div>
         </section>
 
-        <!-- Publications Section -->
-        <section id="publications" class="section">
-            <div class="section__content scroll-fade">
-                <h2 class="section__title">Publications</h2>
-
-                <div class="pub">
-                    <h3 class="pub__title">Evaluating Container Debloaters</h3>
-                    <p class="pub__authors"><strong>Muhammad Hassan</strong>, Talha Tahir, et&nbsp;al.</p>
-                    <p class="pub__venue">IEEE Secure Development Conference 2024</p>
-                    <div class="pub__links">
-                        <a href="https://www.csl.sri.com/users/gehani/papers/SecDev-2023.Debloat.pdf"
-                            class="link">Paper</a>
-                        <a href="https://github.com/sprlab/debloat-bench" class="link">Code</a>
-                    </div>
-                </div>
-
+        <section class="section" id="news" aria-labelledby="news-title">
+            <div class="section__header">
+                <h2 id="news-title">News</h2>
+            </div>
+            <div class="section__body">
+                <ul class="news-list">
+                    <li>
+                        <span>2026</span>
+                        Our work on targeted control-flow transformations for dynamic symbolic execution appears in
+                        PACMPL/OOPSLA.
+                    </li>
+                    <li>
+                        <span>2025</span>
+                        Started the PhD program in Computer Science at Virginia Tech and joined the Language and
+                        Compiler Design Lab.
+                    </li>
+                    <li>
+                        <span>2023</span>
+                        Presented work on evaluating container debloaters at IEEE SecDev.
+                    </li>
+                </ul>
             </div>
         </section>
 
-        <!-- Work Experience Section -->
-        <section id="experience" class="section">
-            <div class="section__content scroll-fade">
-                <h2 class="section__title">Work Experience</h2>
+        <section class="section" id="research" aria-labelledby="research-title">
+            <div class="section__header">
+                <p class="eyebrow">Research</p>
+                <h2 id="research-title">Research themes.</h2>
+            </div>
+            <div class="research-grid">
+                <article class="panel">
+                    <h3>Symbolic Execution</h3>
+                    <p>
+                        Designing targeted control-flow transformations that reduce path explosion and improve bug
+                        discovery in dynamic symbolic execution.
+                    </p>
+                </article>
+                <article class="panel">
+                    <h3>Secure Compilation</h3>
+                    <p>
+                        Developing compiler transformations that reduce timing side-channel leakage and preserve
+                        constant-time behavior across optimized code.
+                    </p>
+                </article>
+                <article class="panel">
+                    <h3>Security Evaluation</h3>
+                    <p>
+                        Evaluating software and container debloating techniques across correctness, CVE mitigation,
+                        attack-surface reduction, and usability.
+                    </p>
+                </article>
+            </div>
+        </section>
 
+        <section class="section" id="publications" aria-labelledby="publications-title">
+            <div class="section__header">
+                <p class="eyebrow">Publications</p>
+                <h2 id="publications-title">Publications.</h2>
+            </div>
+            <ol class="publication-list">
+                <article class="publication">
+                    <p class="publication__venue">PACMPL 10(OOPSLA1), 2026</p>
+                    <h3>Taming the Hydra: Targeted Control-Flow Transformations for Dynamic Symbolic Execution</h3>
+                    <p>
+                        Charitha Saumya, <strong>Muhammad Hassan</strong>, Rohan Gangaraju, Milind Kulkarni,
+                        Kirshanthan Sundararajah.
+                    </p>
+                    <div class="inline-links">
+                        <a href="https://dl.acm.org/doi/10.1145/3798202" target="_blank"
+                            rel="noopener noreferrer">Paper</a>
+                        <a href="https://github.com/hassanaleem/CFMSE-OOPSLA26-Artifact" target="_blank"
+                            rel="noopener noreferrer">Artifact</a>
+                        <a href="viz-merge.html" class="viz-link">▶ Visualization</a>
+                    </div>
+                </article>
+                <article class="publication">
+                    <p class="publication__venue">IEEE Secure Development Conference 2023</p>
+                    <h3>Evaluating Container Debloaters</h3>
+                    <p>
+                        <strong>Muhammad Hassan</strong>, T. Tahir, M. Farrukh, A. Naveed, A. Naeem, F. Shaon,
+                        F. Zaffar, A. Gehani, S. Rahaman.
+                    </p>
+                    <div class="inline-links">
+                        <a href="https://www.csl.sri.com/users/gehani/papers/SecDev-2023.Debloat.pdf" target="_blank"
+                            rel="noopener noreferrer">Paper</a>
+                        <a href="https://github.com/sprlab/debloat-bench" target="_blank"
+                            rel="noopener noreferrer">Code</a>
+                    </div>
+                </article>
+            </ol>
+        </section>
+
+        <section class="section section--split" id="experience" aria-labelledby="experience-title">
+            <div class="section__header">
+                <p class="eyebrow">Research Experience & Artifacts</p>
+                <h2 id="experience-title">Academic work, systems, and evaluation artifacts.</h2>
+            </div>
+            <div class="experience-body">
                 <div class="timeline">
-                    <!-- Item 1 -->
-                    <article class="xp">
-                        <header class="xp__header">
-                            <h3 class="xp__role">Research Assistant, PL/Compilers Lab</h3>
-                            <span class="xp__meta">Virginia Tech • 2024 — Present</span>
-                        </header>
-                        <ul class="xp__bullets">
-                            <li>LLVM-based program analysis and constant-time transformations for secure compilation.
-                            </li>
-                            <li>Explored control-flow merging techniques in LLVM to improve symbolic execution
-                                efficiency and bug-detection robustness.</li>
-                        </ul>
-                        <div class="xp__tags">
-                            <span class="chip">LLVM</span>
-                            <span class="chip">KLEE</span>
-                            <span class="chip">Symbolic Execution</span>
-                            <span class="chip">Program
-                                Analysis</span>
+                    <article class="timeline-item">
+                        <div>
+                            <h3>Graduate Research Assistant</h3>
+                            <p class="meta">Virginia Tech · Jan 2025 - Present</p>
                         </div>
+                        <p>
+                            Investigating compiler transformations for constant-time code and control-flow merging, with
+                            experimental evaluation in LLVM and KLEE.
+                        </p>
                     </article>
-
-                    <!-- Item 3 -->
-                    <article class="xp">
-                        <header class="xp__header">
-                            <h3 class="xp__role">Software Engineer</h3>
-                            <span class="xp__meta">Aerodyne Group • 2023 — 2024</span>
-                        </header>
-                        <ul class="xp__bullets">
-                            <li>Built a 2D/3D annotation interface for digital-twin models; optimized rendering
-                                pipeline.
-                            </li>
-                            <li>Integrated Three.js, Mapbox, and Nexus.js for synchronized transformations.</li>
-                        </ul>
-                        <div class="xp__tags">
-                            <span class="chip">Three.js</span><span class="chip">WebGL</span><span
-                                class="chip">Mapbox</span><span class="chip">Angular</span>
+                    <article class="timeline-item">
+                        <div>
+                            <h3>Software Engineer</h3>
+                            <p class="meta">Aerodyne Group · Jul 2023 - Dec 2024</p>
                         </div>
+                        <p>
+                            Developed interactive 2D/3D annotation systems for digital-twin models, including rendering
+                            optimizations and synchronized spatial transformations.
+                        </p>
                     </article>
-
-
-                    <article class="xp">
-                        <header class="xp__header">
-                            <h3 class="xp__role">Research Assistant</h3>
-                            <span class="xp__meta">Internet Security & Privacy Lab (LUMS) • 2022 — 2024</span>
-                        </header>
-
-                        <ul class="xp__bullets">
-                            <li>Evaluated source-code, binary, and container debloating techniques to analyze their
-                                impact on size, functionality, and security.</li>
-                            <li>First author of a paper on this work accepted at the IEEE Secure Development Conference
-                                ’24.</li>
-                        </ul>
-
-                        <div class="xp__tags">
-                            <span class="chip">Debloating</span>
-                            <span class="chip">Source Code</span>
-                            <span class="chip">Containers</span>
-                            <span class="chip">Benchmarking</span>
-                            <span class="chip">Security</span>
+                    <article class="timeline-item">
+                        <div>
+                            <h3>Research Assistant</h3>
+                            <p class="meta">Lahore University of Management Sciences · Jan 2023 - Oct 2024</p>
                         </div>
+                        <p>
+                            Studied Docker image debloating through benchmarking, correctness testing, CVE analysis, and
+                            security-focused evaluation.
+                        </p>
                     </article>
-
-
+                </div>
+                <div class="artifact-list" aria-label="Research code and artifacts">
+                    <h3>Research Code & Artifacts</h3>
+                    <ul>
+                        <li>
+                            <span>Control Flow Transformations for Symbolic Execution</span>
+                            <p>Targeted compiler transformations for mitigating path explosion in dynamic symbolic
+                                execution. Code and experiment scripts are available with the OOPSLA artifact.</p>
+                            <div class="inline-links">
+                                <a href="https://dl.acm.org/doi/10.1145/3798202" target="_blank"
+                                    rel="noopener noreferrer">Paper</a>
+                                <a href="https://github.com/hassanaleem/CFMSE-OOPSLA26-Artifact" target="_blank"
+                                    rel="noopener noreferrer">Artifact</a>
+                            </div>
+                        </li>
+                        <li>
+                            <span>Debloat Bench</span>
+                            <p>Benchmarking framework for evaluating debloating correctness, size reduction, security,
+                                and time.</p>
+                            <div class="inline-links">
+                                <a href="https://github.com/sprlab/debloat-bench" target="_blank"
+                                    rel="noopener noreferrer">Code</a>
+                                <a href="https://www.csl.sri.com/users/gehani/papers/SecDev-2023.Debloat.pdf"
+                                    target="_blank" rel="noopener noreferrer">Paper</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-
-        <!-- Resume Section -->
-        <section id="resume" class="section">
-            <div class="section__content scroll-fade">
-                <h2 class="section__title">Resume</h2>
-
-                <p class="lede">You can view my latest resume below.</p>
-
-                <div class="btn-row">
-                    <!-- Opens PDF in a new tab -->
-                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--primary">View PDF</a>
-
-                </div>
+        <section class="section" id="skills" aria-labelledby="skills-title">
+            <div class="section__header">
+                <p class="eyebrow">Skills</p>
+                <h2 id="skills-title">Research and engineering toolkit.</h2>
+            </div>
+            <div class="skills-grid">
+                <article class="skill-group">
+                    <h3>Research Tools</h3>
+                    <p>LLVM/Clang, KLEE, SMT solvers, program analysis, Docker, Vagrant</p>
+                </article>
+                <article class="skill-group">
+                    <h3>Languages</h3>
+                    <p>Python, C/C++, Assembly, JavaScript, Solidity, Haskell</p>
+                </article>
+                <article class="skill-group">
+                <h3>ML & Web Frameworks</h3>
+                    <p>Angular, React, Node, Django, TensorFlow, PyTorch, OpenCV</p>
+                </article>
+                <article class="skill-group">
+                    <h3>Systems & Design</h3>
+                    <p>Linux, shell scripting, PostgreSQL, Three.js, Konva.js, Figma</p>
+                </article>
+            </div>
         </section>
 
-
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <div class="section__content section__content--center scroll-fade">
-                <h2 class="section__title">Contact</h2>
-                <p class="lede">
-                    I’m always open to collaborations, discussions, and new ideas.
-                    Feel free to reach out — I’d love to connect! </p>
-                <a href="mailto:mhassan01@vt.edu" class="btn btn--primary">Send an Email</a>
+        <section class="contact" id="contact" aria-labelledby="contact-title">
+            <p class="eyebrow">Contact</p>
+            <h2 id="contact-title">Open to research conversations and collaborations.</h2>
+            <p>
+                The easiest way to reach me is by email. You can also find my work and professional profile through the
+                links below.
+            </p>
+            <div class="hero__actions">
+                <a class="button button--primary" href="mailto:mhassan01@vt.edu">mhassan01@vt.edu</a>
+                <a class="button button--quiet" href="resume.pdf" target="_blank" rel="noopener noreferrer">Resume
+                    PDF</a>
             </div>
         </section>
     </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Muhammad Hassan</p>
+        <div class="footer-links">
+            <a href="https://scholar.google.com/citations?user=fqTwNSYAAAAJ&hl=en" target="_blank"
+                rel="noopener noreferrer">Scholar</a>
+            <a href="https://github.com/hassanaleem" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/hassanaleem1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

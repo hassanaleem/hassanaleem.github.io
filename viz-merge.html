@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Flow Merging — Interactive Visualization</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #fbf7f0;
+      --surf:   #fffdf8;
+      --ink:    #25211d;
+      --muted:  #6f675f;
+      --line:   #e6d8c7;
+      --acc:    #9f4f32;
+      --acc-dk: #763822;
+      --blue:   #2563eb;
+      --amber:  #d97706;
+      --green:  #2d7a3a;
+      --r:      8px;
+      /* edge colors */
+      --ec-true:    #2563eb;
+      --ec-false:   #d97706;
+      --ec-neutral: #b8a898;
+      --ec-back:    #c4b4a4;
+      --ec-merged:  #3a9e6a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; }
+
+    /* ── Flowing edge animation ── */
+    @keyframes flow { from { stroke-dashoffset: 13; } to { stroke-dashoffset: 0; } }
+
+    .e-true    { stroke: var(--ec-true);    stroke-width: 2.2; stroke-dasharray: 8 5; animation: flow .5s linear infinite; }
+    .e-false   { stroke: var(--ec-false);   stroke-width: 2.2; stroke-dasharray: 8 5; animation: flow .5s linear infinite; }
+    .e-neutral { stroke: var(--ec-neutral); stroke-width: 1.5; }
+    .e-back    { stroke: var(--ec-back);    stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .e-merged  { stroke: var(--ec-merged);  stroke-width: 2;   stroke-dasharray: 7 4; animation: flow .65s linear infinite; }
+    .e-done    { stroke: var(--ec-neutral); stroke-width: 1.5; stroke-dasharray: 4 3; }
+
+    /* active state: brighter, faster animation */
+    .e-true.active    { animation-duration: .28s; }
+    .e-false.active   { animation-duration: .28s; }
+    .e-merged.active  { animation-duration: .32s; }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(255,253,248,.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      padding: .85rem 2rem; display: flex; align-items: center; gap: 1.25rem;
+    }
+    .back-link { color: var(--acc-dk); font-weight: 700; font-size: .875rem; text-decoration: none; white-space: nowrap; }
+    .back-link:hover { text-decoration: underline; }
+    .header-info h1 { font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 600; }
+    .header-info p  { font-size: .78rem; color: var(--muted); margin-top: .05rem; }
+
+    /* ── Layout ── */
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    /* ── Explainer ── */
+    .explainer {
+      background: var(--surf); border: 1px solid var(--line); border-radius: var(--r);
+      padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+      font-size: .9rem; color: #4b443e; line-height: 1.8;
+    }
+    .explainer strong { color: var(--ink); }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+      background: var(--surf); border: 1px solid var(--line); border-radius: var(--r);
+      padding: 1rem 1.5rem; margin-bottom: 1.5rem;
+    }
+    .iter-wrap { display: flex; align-items: center; gap: .7rem; flex: 1; min-width: 160px; }
+    .iter-label { font-size: .82rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+    input[type=range] { flex: 1; accent-color: var(--acc); cursor: pointer; }
+    .iter-num  { font-size: 1.3rem; font-weight: 800; color: var(--acc-dk); min-width: 1.5rem; text-align: center; }
+    .play-btn  { padding: .5rem 1.15rem; background: var(--acc); color: #fff; border: none; border-radius: 6px; font-size: .85rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 150ms; }
+    .play-btn:hover { background: var(--acc-dk); }
+    .count-pills { display: flex; gap: .65rem; flex-wrap: wrap; align-items: center; }
+    .pill { padding: .38rem .95rem; border-radius: 999px; font-size: .82rem; font-weight: 600; display: flex; align-items: center; gap: .35rem; }
+    .pill-red   { background: rgba(184,50,50,.09);   color: #b83232; border: 1px solid rgba(184,50,50,.2); }
+    .pill-green { background: rgba(45,122,58,.09);   color: var(--green); border: 1px solid rgba(45,122,58,.2); }
+    .pill strong { font-size: 1.05rem; font-weight: 800; }
+
+    /* ── Panels ── */
+    .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .panel  { background: var(--surf); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; box-shadow: 0 6px 20px rgba(70,45,25,.07); }
+    .panel-head { padding: .9rem 1.2rem .55rem; border-bottom: 1px solid var(--line); }
+    .panel-head h2 { font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; }
+    .panel-head p  { font-size: .76rem; color: var(--muted); margin-top: .1rem; }
+    .panel-std .panel-head h2 { color: #b83232; }
+    .panel-mrg .panel-head h2 { color: var(--green); }
+
+    /* edge legend */
+    .legend { display: flex; gap: 1.1rem; padding: .55rem 1.2rem; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: .4rem; font-size: .75rem; font-weight: 600; color: var(--muted); }
+    .legend-line { width: 24px; height: 3px; border-radius: 2px; }
+    .ll-true  { background: var(--blue);  }
+    .ll-false { background: var(--amber); }
+    .ll-back  { background: var(--ec-back);  }
+
+    .svg-wrap  { padding: .5rem .5rem 0; }
+    svg.cfg    { width: 100%; display: block; overflow: visible; }
+
+    /* ── Path counter ── */
+    .path-footer {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .6rem 1.2rem; border-top: 1px solid var(--line);
+      font-size: .8rem; color: var(--muted); font-weight: 600; flex-wrap: wrap;
+    }
+    .big-num { font-size: 1.75rem; font-weight: 800; line-height: 1; }
+    .big-num.red   { color: #b83232; }
+    .big-num.green { color: var(--green); }
+    .dot-row { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; }
+    .dot  { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .dot.red   { background: #b83232; opacity: .72; }
+    .dot.green { background: var(--green); opacity: .72; }
+    .dot-more  { font-size: .75rem; font-weight: 800; }
+    .dot-more.red   { color: #b83232; }
+    .dot-more.green { color: var(--green); }
+
+    /* ── Iteration segments ── */
+    .iter-segs { display: flex; gap: 3px; padding: 0 1.2rem .65rem; }
+    .seg { flex: 1; height: 3px; border-radius: 2px; background: var(--line); transition: background .25s; }
+    .seg.on-red   { background: #b83232; }
+    .seg.on-green { background: var(--green); }
+
+    @media (max-width: 700px) {
+      .panels   { grid-template-columns: 1fr; }
+      .controls { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="back-link">← Back</a>
+  <div class="header-info">
+    <h1>Control Flow Merging</h1>
+    <p>Path explosion in symbolic execution and how merging tames it &nbsp;·&nbsp; OOPSLA 2026</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="explainer">
+    In <strong>symbolic execution</strong>, every branch forks the engine: the
+    <span style="color:var(--blue);font-weight:700">true path</span> and the
+    <span style="color:var(--amber);font-weight:700">false path</span> are both explored independently.
+    Inside a loop this causes <strong>exponential explosion — 2<sup>N</sup> paths after N&nbsp;iterations</strong>.
+    <strong>Control-flow merging</strong> linearizes the loop body into a single <em>combined block</em>
+    that computes both outcomes and picks the right one via a <code>select</code>,
+    keeping a single symbolic state throughout.
+    Drag the slider (or press&nbsp;Play) to watch the divergence.
+  </div>
+
+  <div class="controls">
+    <div class="iter-wrap">
+      <span class="iter-label">Loop iterations</span>
+      <input type="range" id="slider" min="1" max="8" value="3">
+      <span class="iter-num" id="iterNum">3</span>
+    </div>
+    <button class="play-btn" id="playBtn">▶ Play</button>
+    <div class="count-pills">
+      <span class="pill pill-red">Without merging:&nbsp;<strong id="cntStd">8</strong> paths</span>
+      <span class="pill pill-green">With merging:&nbsp;<strong>1</strong> path</span>
+    </div>
+  </div>
+
+  <div class="panels">
+
+    <!-- Standard panel -->
+    <div class="panel panel-std">
+      <div class="panel-head">
+        <h2>Without Merging</h2>
+        <p>Paths fork at every conditional — never joined</p>
+      </div>
+      <div class="legend">
+        <span class="legend-item"><span class="legend-line ll-true"></span>True branch</span>
+        <span class="legend-item"><span class="legend-line ll-false"></span>False branch</span>
+        <span class="legend-item"><span class="legend-line ll-back"></span>Loop / exit</span>
+      </div>
+      <div class="svg-wrap">
+        <svg class="cfg" id="svgStd" viewBox="0 0 340 420"></svg>
+      </div>
+      <div class="path-footer">
+        <span class="big-num red" id="numStd">8</span>
+        <span>active paths</span>
+        <div class="dot-row" id="dotsStd"></div>
+      </div>
+      <div class="iter-segs" id="segsStd"></div>
+    </div>
+
+    <!-- Merged panel -->
+    <div class="panel panel-mrg">
+      <div class="panel-head">
+        <h2>With Merging — linearized dataflow</h2>
+        <p>Both paths computed inside one block; <code>select</code> picks the result</p>
+      </div>
+      <div class="svg-wrap">
+        <svg class="cfg" id="svgMrg" viewBox="0 0 320 420"></svg>
+      </div>
+      <div class="path-footer">
+        <span class="big-num green">1</span>
+        <span>active path</span>
+        <div class="dot-row"><span class="dot green"></span></div>
+      </div>
+      <div class="iter-segs" id="segsMrg"></div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   Helpers
+═══════════════════════════════════════════════════════════════════ */
+const NS = 'http://www.w3.org/2000/svg';
+
+function e(tag, attrs, children) {
+  const el = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, String(v));
+  (children || []).forEach(c => el.appendChild(c));
+  return el;
+}
+
+function txt(content, x, y, attrs) {
+  const t = e('text', { x, y, 'text-anchor': 'middle', 'dominant-baseline': 'middle',
+    'font-family': 'Inter,sans-serif', ...attrs });
+  t.textContent = content;
+  return t;
+}
+
+function arrow(id, color, w = 5, h = 5) {
+  return e('marker', { id, viewBox: '0 0 8 8', refX: '7', refY: '4',
+    markerWidth: w, markerHeight: h, orient: 'auto-start-reverse' }, [
+    e('path', { d: 'M0,0 L8,4 L0,8 Z', fill: color })
+  ]);
+}
+
+function node(svg, cx, cy, w, h, label, fillColor, strokeColor, extraClass) {
+  const g = e('g', { 'data-n': label.replace(/\s+/g, '_'), class: `node${extraClass ? ' ' + extraClass : ''}` });
+  g.appendChild(e('rect', { x: cx - w/2, y: cy - h/2, width: w, height: h, rx: 7,
+    fill: fillColor, stroke: strokeColor, 'stroke-width': '1.8' }));
+  g.appendChild(txt(label, cx, cy + 1, { 'font-size': '11', 'font-weight': '700', fill: '#25211d' }));
+  svg.appendChild(g);
+  return g;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   STANDARD CFG  (340×420)
+   Nodes: Entry, Cond, Then, Else, Merge, Exit
+   Colored edges: true=blue, false=amber, rest=neutral
+═══════════════════════════════════════════════════════════════════ */
+const S = {
+  entry: { x: 170, y: 44,  w: 115, h: 32, fill: '#fffdf8', stroke: '#d8c9b4' },
+  cond:  { x: 170, y: 116, w: 108, h: 32, fill: '#fefaf4', stroke: '#d0c4a8' },
+  then:  { x:  82, y: 208, w: 100, h: 32, fill: '#fffdf8', stroke: '#d8c9b4' },
+  else_: { x: 258, y: 208, w: 100, h: 32, fill: '#fffdf8', stroke: '#d8c9b4' },
+  merge: { x: 170, y: 300, w: 115, h: 32, fill: '#fffdf8', stroke: '#d8c9b4' },
+  exit:  { x: 170, y: 385, w: 115, h: 32, fill: '#fffdf8', stroke: '#d8c9b4' },
+};
+
+function buildStandardCFG() {
+  const svg = document.getElementById('svgStd');
+  svg.innerHTML = '';
+
+  const defs = e('defs', {}, [
+    arrow('a-neutral', '#b8a898'),
+    arrow('a-true',    '#2563eb'),
+    arrow('a-false',   '#d97706'),
+  ]);
+  svg.appendChild(defs);
+
+  const path = (d, cls, arrId, label, lx, ly) => {
+    const p = e('path', { d, fill: 'none', class: cls, 'data-eid': cls,
+      'marker-end': `url(#${arrId})` });
+    svg.appendChild(p);
+    if (label) svg.appendChild(txt(label, lx, ly, { 'font-size': '9.5', 'font-weight': '700', fill: '#b0a090' }));
+    return p;
+  };
+
+  // Entry → Cond (neutral, straight)
+  path(`M ${S.entry.x} ${S.entry.y+16} L ${S.cond.x} ${S.cond.y-16}`, 'e-neutral', 'a-neutral');
+
+  // Cond → Then (true branch, BLUE)
+  path(`M ${S.cond.x-24} ${S.cond.y+16} C ${S.cond.x-24} ${S.cond.y+42} ${S.then.x+16} ${S.then.y-22} ${S.then.x+16} ${S.then.y-16}`,
+    'e-true', 'a-true', 'true', 110, 160);
+
+  // Cond → Else (false branch, AMBER)
+  path(`M ${S.cond.x+24} ${S.cond.y+16} C ${S.cond.x+24} ${S.cond.y+42} ${S.else_.x-16} ${S.else_.y-22} ${S.else_.x-16} ${S.else_.y-16}`,
+    'e-false', 'a-false', 'false', 230, 160);
+
+  // Then → Merge (true, BLUE)
+  path(`M ${S.then.x+16} ${S.then.y+16} C ${S.then.x+16} ${S.then.y+42} ${S.merge.x-26} ${S.merge.y-22} ${S.merge.x-26} ${S.merge.y-16}`,
+    'e-true', 'a-true');
+
+  // Else → Merge (false, AMBER)
+  path(`M ${S.else_.x-16} ${S.else_.y+16} C ${S.else_.x-16} ${S.else_.y+42} ${S.merge.x+26} ${S.merge.y-22} ${S.merge.x+26} ${S.merge.y-16}`,
+    'e-false', 'a-false');
+
+  // Merge → Cond (back, neutral dashed)
+  path(`M ${S.merge.x} ${S.merge.y+16} C ${S.merge.x} ${S.merge.y+48} ${S.merge.x-126} ${S.merge.y+48} ${S.merge.x-126} ${(S.merge.y+S.cond.y)/2} C ${S.merge.x-126} ${S.cond.y} ${S.cond.x-54} ${S.cond.y} ${S.cond.x-54} ${S.cond.y}`,
+    'e-back', 'a-neutral', 'next iter', 22, 206);
+
+  // Cond → Exit (done, neutral dashed)
+  path(`M ${S.cond.x+54} ${S.cond.y} C ${S.cond.x+110} ${S.cond.y} ${S.exit.x+72} ${S.exit.y} ${S.exit.x+58} ${S.exit.y}`,
+    'e-done', 'a-neutral', 'done', 310, 238);
+
+  // Nodes (drawn on top)
+  node(svg, S.entry.x, S.entry.y, S.entry.w, S.entry.h, 'Loop Entry', S.entry.fill, S.entry.stroke);
+  node(svg, S.cond.x,  S.cond.y,  S.cond.w,  S.cond.h,  'Condition',  S.cond.fill,  S.cond.stroke);
+  node(svg, S.then.x,  S.then.y,  S.then.w,  S.then.h,  'Then Block', S.then.fill,  S.then.stroke);
+  node(svg, S.else_.x, S.else_.y, S.else_.w, S.else_.h, 'Else Block', S.else_.fill, S.else_.stroke);
+  node(svg, S.merge.x, S.merge.y, S.merge.w, S.merge.h, 'Merge Point',S.merge.fill, S.merge.stroke);
+  node(svg, S.exit.x,  S.exit.y,  S.exit.w,  S.exit.h,  'Loop Exit',  S.exit.fill,  S.exit.stroke);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MERGED CFG  (320×420) — linearized dataflow
+   Nodes: Entry, Cond, Combined (with select internals), Exit
+   Single path, no branching
+═══════════════════════════════════════════════════════════════════ */
+const M = {
+  entry:    { x: 150, y: 44,  w: 115, h: 32 },
+  cond:     { x: 118, y: 116, w: 100, h: 32 },
+  exit_:    { x: 272, y: 116, w: 80,  h: 32 },  // right of cond, same row
+  combined: { x: 150, y: 275, w: 194, h: 114 }, // tall combined block
+};
+
+function buildMergedCFG() {
+  const svg = document.getElementById('svgMrg');
+  svg.innerHTML = '';
+
+  const defs = e('defs', {}, [
+    arrow('m-neutral', '#b8a898'),
+    arrow('m-merged',  '#3a9e6a', 5, 5),
+    arrow('m-mini',    '#94a3b8', 4, 4),
+  ]);
+  svg.appendChild(defs);
+
+  const path = (d, cls, arrId, label, lx, ly) => {
+    const p = e('path', { d, fill: 'none', class: cls, 'marker-end': `url(#${arrId})` });
+    svg.appendChild(p);
+    if (label) svg.appendChild(txt(label, lx, ly, { 'font-size': '9.5', 'font-weight': '700', fill: '#b0a090' }));
+    return p;
+  };
+
+  // Entry → Cond (straight with slight lean)
+  path(`M 150 60 C 150 82 118 90 118 100`, 'e-merged', 'm-merged');
+
+  // Cond → Combined (single path down)
+  path(`M 118 132 C 118 170 150 196 150 218`, 'e-merged', 'm-merged');
+
+  // Cond → Exit (done, dashed right)
+  path(`M 168 116 L 232 116`, 'e-done', 'm-neutral', 'done', 200, 107);
+
+  // Combined → Cond (back edge, left curve)
+  const cbL = M.combined.x - M.combined.w/2; // left edge of combined
+  path(`M ${cbL} 275 C 12 275 12 116 68 116`,
+    'e-back', 'm-neutral', 'next iter', 9, 198);
+
+  // ── Draw combined block ──────────────────────────────────────────
+  const cb = M.combined;
+  const cbTop    = cb.y - cb.h/2;   // 218
+  const cbBot    = cb.y + cb.h/2;   // 332
+  const cbLeft   = cb.x - cb.w/2;   // 53
+  const cbRight  = cb.x + cb.w/2;   // 247
+  const midX     = cb.x;            // 150
+
+  // Outer rect
+  svg.appendChild(e('rect', { x: cbLeft, y: cbTop, width: cb.w, height: cb.h, rx: 9,
+    fill: '#fffdf8', stroke: '#d8c9b4', 'stroke-width': '1.8' }));
+
+  // Title
+  svg.appendChild(txt('Combined Block', midX, cbTop + 14, { 'font-size': '10.5', 'font-weight': '800', fill: '#25211d' }));
+
+  // Horizontal rule under title
+  svg.appendChild(e('line', { x1: cbLeft + 2, y1: cbTop + 24, x2: cbRight - 2, y2: cbTop + 24,
+    stroke: '#d8c9b4', 'stroke-width': '1' }));
+
+  // Vertical divider splitting True/False columns
+  svg.appendChild(e('line', { x1: midX, y1: cbTop + 24, x2: midX, y2: cbTop + 76,
+    stroke: '#d8c9b4', 'stroke-width': '1', 'stroke-dasharray': '3 2' }));
+
+  // Column labels
+  svg.appendChild(txt('True path', midX - 49, cbTop + 35, { 'font-size': '8.5', 'font-weight': '800', fill: '#1d4ed8' }));
+  svg.appendChild(txt('False path', midX + 49, cbTop + 35, { 'font-size': '8.5', 'font-weight': '800', fill: '#92400e' }));
+
+  // True mini block
+  const tBox = { x: midX - 49, y: cbTop + 50, w: 76, h: 24 };
+  svg.appendChild(e('rect', { x: tBox.x - tBox.w/2, y: tBox.y - tBox.h/2, width: tBox.w, height: tBox.h, rx: 5,
+    fill: '#fffdf8', stroke: '#d8c9b4', 'stroke-width': '1.5', 'data-n': 'true_block' }));
+  svg.appendChild(txt('x = f_true(state)', tBox.x, tBox.y + 1,
+    { 'font-size': '8.5', 'font-weight': '600', fill: '#25211d' }));
+
+  // False mini block
+  const fBox = { x: midX + 49, y: cbTop + 50, w: 76, h: 24 };
+  svg.appendChild(e('rect', { x: fBox.x - fBox.w/2, y: fBox.y - fBox.h/2, width: fBox.w, height: fBox.h, rx: 5,
+    fill: '#fffdf8', stroke: '#d8c9b4', 'stroke-width': '1.5', 'data-n': 'false_block' }));
+  svg.appendChild(txt('x = f_false(state)', fBox.x, fBox.y + 1,
+    { 'font-size': '8.5', 'font-weight': '600', fill: '#25211d' }));
+
+  // Converging arrows from True/False down to select
+  const selY = cbTop + 90;
+  svg.appendChild(e('path', { d: `M ${tBox.x} ${tBox.y+12} L ${midX - 8} ${selY - 8}`,
+    fill: 'none', stroke: '#94a3b8', 'stroke-width': '1.2', 'marker-end': 'url(#m-mini)' }));
+  svg.appendChild(e('path', { d: `M ${fBox.x} ${fBox.y+12} L ${midX + 8} ${selY - 8}`,
+    fill: 'none', stroke: '#94a3b8', 'stroke-width': '1.2', 'marker-end': 'url(#m-mini)' }));
+
+  // Horizontal rule above select
+  svg.appendChild(e('line', { x1: cbLeft + 2, y1: cbTop + 80, x2: cbRight - 2, y2: cbTop + 80,
+    stroke: '#d8c9b4', 'stroke-width': '1' }));
+
+  // Select row background
+  svg.appendChild(e('rect', { x: cbLeft + 2, y: cbTop + 81, width: cb.w - 4, height: cb.h - 83, rx: '0 0 9 9',
+    fill: '#fffdf8' }));
+
+  // Select instruction text
+  svg.appendChild(txt('select(cond, f_true, f_false)', midX, cbTop + 97,
+    { 'font-size': '9.5', 'font-weight': '800', fill: '#25211d', 'letter-spacing': '-.2' }));
+
+  // ── Static nodes ────────────────────────────────────────────────
+  node(svg, M.entry.x, M.entry.y, M.entry.w, M.entry.h, 'Loop Entry', '#fffdf8', '#d8c9b4');
+  node(svg, M.cond.x,  M.cond.y,  M.cond.w,  M.cond.h,  'Condition',  '#fefaf4', '#d0c4a8');
+  node(svg, M.exit_.x, M.exit_.y, M.exit_.w, M.exit_.h, 'Loop Exit',  '#fffdf8', '#d8c9b4');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Animation — highlight nodes & edges
+═══════════════════════════════════════════════════════════════════ */
+// Phases per iteration: entry → cond → [then+else] → merge
+// Plus final phase: exit
+const PHASES = [
+  { std: ['Loop_Entry'], mrg: ['Loop_Entry'] },
+  { std: ['Condition'],  mrg: ['Condition'] },
+  { std: ['Then_Block', 'Else_Block'], mrg: ['combined_true', 'combined_false'] },  // fork / combined compute
+  { std: ['Merge_Point'],             mrg: ['combined_select'] },                   // merge / select
+];
+const STEP_MS = 680;
+
+let playing = false, timer = null, animIter = 0, animPhase = 0;
+
+function glowNode(svgId, nodeLabel) {
+  const svg = document.getElementById(svgId);
+  svg.querySelectorAll('.node').forEach(g => {
+    const r = g.querySelector('rect');
+    if (!r) return;
+    const id = g.getAttribute('data-n');
+    const defaults = {
+      'Loop_Entry': ['#fffdf8','#d8c9b4'],
+      'Condition':  ['#fefaf4','#d0c4a8'],
+      'Then_Block': ['#fffdf8','#d8c9b4'],
+      'Else_Block': ['#fffdf8','#d8c9b4'],
+      'Merge_Point':['#fffdf8','#d8c9b4'],
+      'Loop_Exit':  ['#fffdf8','#d8c9b4'],
+    };
+    const def = defaults[id] || ['#fffdf8','#d8c9b4'];
+    r.setAttribute('fill', def[0]);
+    r.setAttribute('stroke', def[1]);
+    r.setAttribute('stroke-width', '1.8');
+  });
+}
+
+// Keep combined-block sub-sections neutral; colored paths carry the visual state.
+function glowCombined(phase) {
+  const svg = document.getElementById('svgMrg');
+  const trueRect  = svg.querySelector('[data-n="true_block"]');
+  const falseRect = svg.querySelector('[data-n="false_block"]');
+  trueRect?.setAttribute('stroke-width', '1.5');
+  trueRect?.setAttribute('fill', '#fffdf8');
+  trueRect?.setAttribute('stroke', '#d8c9b4');
+  falseRect?.setAttribute('stroke-width', '1.5');
+  falseRect?.setAttribute('fill', '#fffdf8');
+  falseRect?.setAttribute('stroke', '#d8c9b4');
+}
+
+function applyPhase(itersDone, phase, totalIters) {
+  const p = PHASES[phase];
+
+  // Standard panel: glow nodes
+  p.std.forEach(nid => glowNode('svgStd', nid));
+
+  // Merged panel: glow node or sub-block
+  if (p.mrg[0].startsWith('combined')) {
+    // restore outer merged node to normal
+    glowNode('svgMrg', 'Condition');
+    p.mrg.forEach(pid => glowCombined(pid));
+  } else {
+    p.mrg.forEach(nid => glowNode('svgMrg', nid));
+  }
+
+  // Update counter on merge/select phase
+  if (phase === 3) {
+    const cnt = Math.pow(2, itersDone);
+    document.getElementById('numStd').textContent = cnt.toLocaleString();
+    document.getElementById('cntStd').textContent = cnt.toLocaleString();
+    renderDots('dotsStd', cnt, 'red');
+    renderSegs('segsStd', itersDone, totalIters, 'red');
+    renderSegs('segsMrg', itersDone, totalIters, 'green');
+  }
+}
+
+function stopAnim() {
+  clearInterval(timer); timer = null; playing = false;
+  document.getElementById('playBtn').textContent = '▶ Play';
+}
+
+function startAnim(totalIters) {
+  stopAnim();
+  animIter = 1; animPhase = 0;
+  playing = true;
+  document.getElementById('playBtn').textContent = '⏸ Pause';
+
+  // reset counts
+  document.getElementById('numStd').textContent = '1';
+  document.getElementById('cntStd').textContent = '1';
+  renderDots('dotsStd', 1, 'red');
+  renderSegs('segsStd', 0, totalIters, 'red');
+  renderSegs('segsMrg', 0, totalIters, 'green');
+
+  timer = setInterval(() => {
+    applyPhase(animIter, animPhase, totalIters);
+    animPhase++;
+    if (animPhase >= PHASES.length) {
+      animPhase = 0;
+      animIter++;
+    }
+    if (animIter > totalIters) {
+      stopAnim();
+      glowNode('svgStd', 'Loop_Exit', '#b83232', '#fff0ee');
+      glowNode('svgMrg', 'Loop_Exit', '#2d7a3a', '#f0fdf4');
+    }
+  }, STEP_MS);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   UI helpers
+═══════════════════════════════════════════════════════════════════ */
+function renderDots(id, count, cls) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '';
+  const show = Math.min(count, 12);
+  for (let i = 0; i < show; i++) {
+    const d = document.createElement('span');
+    d.className = `dot ${cls}`;
+    el.appendChild(d);
+  }
+  if (count > 12) {
+    const m = document.createElement('span');
+    m.className = `dot-more ${cls}`;
+    m.textContent = `+${count - 12}`;
+    el.appendChild(m);
+  }
+}
+
+function renderSegs(id, filled, total, cls) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const s = document.createElement('div');
+    s.className = `seg${i < filled ? ` on-${cls}` : ''}`;
+    el.appendChild(s);
+  }
+}
+
+function renderStatic(iters) {
+  const cnt = Math.pow(2, iters);
+  document.getElementById('iterNum').textContent = iters;
+  document.getElementById('slider').value = iters;
+  document.getElementById('numStd').textContent = cnt.toLocaleString();
+  document.getElementById('cntStd').textContent = cnt.toLocaleString();
+  renderDots('dotsStd', cnt, 'red');
+  renderSegs('segsStd', iters, 8, 'red');
+  renderSegs('segsMrg', iters, 8, 'green');
+  glowNode('svgStd', 'Merge_Point', '#b83232', '#fff0ee');
+  glowCombined('combined_select');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Init
+═══════════════════════════════════════════════════════════════════ */
+buildStandardCFG();
+buildMergedCFG();
+renderStatic(3);
+
+document.getElementById('slider').addEventListener('input', e => {
+  stopAnim();
+  renderStatic(parseInt(e.target.value));
+});
+
+document.getElementById('playBtn').addEventListener('click', () => {
+  if (playing) { stopAnim(); return; }
+  startAnim(parseInt(document.getElementById('slider').value));
+});
+</script>
+</body>
+</html>
