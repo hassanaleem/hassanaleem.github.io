@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Control Flow Merging — Interactive Visualization</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Lora:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <style>
     :root {
       --bg:     #fbf7f0;
@@ -141,21 +141,23 @@
   <a href="index.html" class="back-link">← Back</a>
   <div class="header-info">
     <h1>Control Flow Merging</h1>
-    <p>Path explosion in symbolic execution and how merging tames it &nbsp;·&nbsp; OOPSLA 2026</p>
+    <p>How control-flow merging reduces state forking in symbolic execution &nbsp;·&nbsp; OOPSLA 2026</p>
   </div>
 </header>
 
 <main class="wrap">
 
   <div class="explainer">
-    In <strong>symbolic execution</strong>, every branch forks the engine: the
-    <span style="color:var(--blue);font-weight:700">true path</span> and the
-    <span style="color:var(--amber);font-weight:700">false path</span> are both explored independently.
-    Inside a loop this causes <strong>exponential explosion — 2<sup>N</sup> paths after N&nbsp;iterations</strong>.
-    <strong>Control-flow merging</strong> linearizes the loop body into a single <em>combined block</em>
-    that computes both outcomes and picks the right one via a <code>select</code>,
-    keeping a single symbolic state throughout.
-    Drag the slider (or press&nbsp;Play) to watch the divergence.
+    <strong>Symbolic execution</strong> can fork a state when a branch depends on symbolic input
+    and both outcomes are feasible. The
+    <span style="color:var(--blue);font-weight:700">true branch</span> and the
+    <span style="color:var(--amber);font-weight:700">false branch</span> are then explored independently.
+    With two feasible choices at each iteration, this simplified example has
+    <strong>2<sup>N</sup> possible paths after N&nbsp;iterations</strong>.
+    In this example, <strong>control-flow merging</strong> replaces the branch with a
+    <em>combined block</em> that computes both outcomes and uses <code>select</code>
+    to choose the appropriate result. This avoids state forking at that branch.
+    Move the slider or press&nbsp;Play to compare the two versions.
   </div>
 
   <div class="controls">
@@ -166,8 +168,8 @@
     </div>
     <button class="play-btn" id="playBtn">▶ Play</button>
     <div class="count-pills">
-      <span class="pill pill-red">Without merging:&nbsp;<strong id="cntStd">8</strong> paths</span>
-      <span class="pill pill-green">With merging:&nbsp;<strong>1</strong> path</span>
+      <span class="pill pill-red">Without merging&nbsp;<strong id="cntStd">8</strong> symbolic states</span>
+      <span class="pill pill-green">With merging&nbsp;<strong>1</strong> symbolic state</span>
     </div>
   </div>
 
@@ -176,8 +178,8 @@
     <!-- Standard panel -->
     <div class="panel panel-std">
       <div class="panel-head">
-        <h2>Without Merging</h2>
-        <p>Paths fork at every conditional — never joined</p>
+        <h2>Without merging</h2>
+        <p>Symbolic states fork at the branch and remain separate in this example.</p>
       </div>
       <div class="legend">
         <span class="legend-item"><span class="legend-line ll-true"></span>True branch</span>
@@ -189,7 +191,7 @@
       </div>
       <div class="path-footer">
         <span class="big-num red" id="numStd">8</span>
-        <span>active paths</span>
+        <span>symbolic states</span>
         <div class="dot-row" id="dotsStd"></div>
       </div>
       <div class="iter-segs" id="segsStd"></div>
@@ -198,15 +200,15 @@
     <!-- Merged panel -->
     <div class="panel panel-mrg">
       <div class="panel-head">
-        <h2>With Merging — linearized dataflow</h2>
-        <p>Both paths computed inside one block; <code>select</code> picks the result</p>
+        <h2>With merging</h2>
+        <p>The combined block computes both outcomes. <code>select</code> chooses the appropriate result.</p>
       </div>
       <div class="svg-wrap">
         <svg class="cfg" id="svgMrg" viewBox="0 0 320 420"></svg>
       </div>
       <div class="path-footer">
         <span class="big-num green">1</span>
-        <span>active path</span>
+        <span>symbolic state</span>
         <div class="dot-row"><span class="dot green"></span></div>
       </div>
       <div class="iter-segs" id="segsMrg"></div>

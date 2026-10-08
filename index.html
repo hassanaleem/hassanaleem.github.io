@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
-        content="Muhammad Hassan is a PhD student in Computer Science at Virginia Tech working on compilers, program analysis, symbolic execution, and software testing." />
+        content="Muhammad Hassan is a PhD student in computer science at Virginia Tech researching compiler transformations for program analysis and security." />
     <title>Muhammad Hassan | PhD Student in Computer Science</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Lora:wght@500;600;700&amp;display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
 </head>
@@ -20,7 +20,7 @@
 
     <header class="site-header">
         <a class="brand" href="#top" aria-label="Muhammad Hassan home">
-            <span class="brand__mark">MH</span>
+            <span class="brand__mark" aria-hidden="true"></span>
             <span>Muhammad Hassan</span>
         </a>
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
@@ -28,7 +28,9 @@
             <a href="#news">News</a>
             <a href="#research">Research</a>
             <a href="#publications">Publications</a>
+            <a href="#honors">Honors</a>
             <a href="#experience">Experience</a>
+            <a href="#teaching">Teaching</a>
             <a href="#skills">Skills</a>
             <a href="#contact">Contact</a>
         </nav>
@@ -39,19 +41,19 @@
             <div class="hero__content">
                 <h1 id="hero-title">Muhammad Hassan</h1>
                 <p class="academic-title">
-                    PhD Student in Computer Science, Virginia Tech
+                    PhD student in computer science at Virginia Tech
                 </p>
                 <p class="hero__lede">
-                    I study compiler and program-analysis techniques for improving software reliability, security, and
-                    test effectiveness, with current work in symbolic execution and constant-time transformations.
+                    I study compiler transformations for program analysis and security, with a focus on symbolic
+                    execution, parallel SMT solving, and constant-time code.
                 </p>
                 <p class="contact-line">
-                    <a href="mailto:mhassan01@vt.edu">mhassan01@vt.edu</a> ·
-                    <a href="https://scholar.google.com/citations?user=fqTwNSYAAAAJ&hl=en" target="_blank"
-                        rel="noopener noreferrer">Google Scholar</a> ·
-                    <a href="https://github.com/hassanaleem" target="_blank" rel="noopener noreferrer">GitHub</a> ·
+                    <a href="mailto:mhassan01@vt.edu">mhassan01@vt.edu</a>
+                    <a href="https://scholar.google.com/citations?user=fqTwNSYAAAAJ&amp;hl=en" target="_blank"
+                        rel="noopener noreferrer">Google Scholar</a>
+                    <a href="https://github.com/hassanaleem" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://www.linkedin.com/in/hassanaleem1/" target="_blank"
-                        rel="noopener noreferrer">LinkedIn</a> ·
+                        rel="noopener noreferrer">LinkedIn</a>
                     <a href="resume.pdf" target="_blank" rel="noopener noreferrer">CV</a>
                 </p>
             </div>
@@ -62,21 +64,19 @@
 
         <section class="section" id="about" aria-labelledby="about-title">
             <div class="section__header">
-                <p class="eyebrow">About</p>
-                <h2 id="about-title">I work on program analysis and compiler techniques for dependable software.</h2>
+                <h2 id="about-title">About</h2>
             </div>
             <div class="section__body prose">
                 <p>
-                    I am a PhD student in Computer Science at Virginia Tech, advised by
+                    I am a PhD student in computer science at Virginia Tech and a Pratt Fellow. I am advised by
                     <a href="https://kirshanthans.github.io/" target="_blank" rel="noopener noreferrer">Dr.
-                        Kirshanthan Sundararajah</a>.
-                    My research interests are in compilers, programming languages, software testing, and security, with
-                    an emphasis on techniques that make program behavior easier to analyze and validate.
+                        Kirshanthan Sundararajah</a>
+                    in the Language and Compiler Design Lab.
                 </p>
                 <p>
-                    Before Virginia Tech, I completed my B.S. in Computer Science at Lahore University of Management
-                    Sciences, where I worked on software debloating and security evaluation. I am especially interested
-                    in research that combines principled compiler ideas with empirical systems evaluation.
+                    I earned a BS in computer science from Lahore University of Management Sciences, where I worked
+                    on software debloating and security evaluation. I later worked as a software engineer at Aerodyne
+                    Group, developing 3D tools.
                 </p>
             </div>
         </section>
@@ -86,20 +86,23 @@
                 <h2 id="news-title">News</h2>
             </div>
             <div class="section__body">
-                <ul class="news-list">
+                <ul class="news-list news-timeline">
                     <li>
-                        <span>2026</span>
-                        Our work on targeted control-flow transformations for dynamic symbolic execution appears in
-                        PACMPL/OOPSLA.
+                        <span>Oct 2026</span>
+                        I presented Taming the Hydra at OOPSLA 2026 and ThunderFork at the
+                        SPLASH/ISSTA Student Research Competition.
                     </li>
                     <li>
-                        <span>2025</span>
-                        Started the PhD program in Computer Science at Virginia Tech and joined the Language and
-                        Compiler Design Lab.
+                        <span>May 2026</span>
+                        I received the Pratt Fellowship.
                     </li>
                     <li>
-                        <span>2023</span>
-                        Presented work on evaluating container debloaters at IEEE SecDev.
+                        <span>Mar 2026</span>
+                        The artifact for Taming the Hydra received three artifact evaluation badges.
+                    </li>
+                    <li>
+                        <span>Mar 2026</span>
+                        I passed my PhD qualifying exam.
                     </li>
                 </ul>
             </div>
@@ -107,47 +110,64 @@
 
         <section class="section" id="research" aria-labelledby="research-title">
             <div class="section__header">
-                <p class="eyebrow">Research</p>
-                <h2 id="research-title">Research themes.</h2>
+                <h2 id="research-title">Research Interests</h2>
             </div>
             <div class="research-grid">
                 <article class="panel">
                     <h3>Symbolic Execution</h3>
                     <p>
-                        Designing targeted control-flow transformations that reduce path explosion and improve bug
-                        discovery in dynamic symbolic execution.
+                        I develop LLVM transformations that reduce path explosion in KLEE.
                     </p>
+                    <div class="inline-links">
+                        <a href="https://dl.acm.org/doi/10.1145/3798202" target="_blank"
+                            rel="noopener noreferrer">OOPSLA 2026</a>
+                    </div>
+                </article>
+                <article class="panel">
+                    <h3>SMT Solving</h3>
+                    <p>
+                        I develop cost-guided control-flow transformations that split SMT queries for parallel solving.
+                    </p>
+                    <div class="inline-links">
+                        <a href="https://dl.acm.org/doi/10.1145/3837729.3839577" target="_blank"
+                            rel="noopener noreferrer">ThunderFork</a>
+                    </div>
                 </article>
                 <article class="panel">
                     <h3>Secure Compilation</h3>
                     <p>
-                        Developing compiler transformations that reduce timing side-channel leakage and preserve
-                        constant-time behavior across optimized code.
+                        I investigate compiler transformations for constant-time code and protection against timing
+                        side channels.
                     </p>
                 </article>
                 <article class="panel">
-                    <h3>Security Evaluation</h3>
+                    <h3>Software Debloating</h3>
                     <p>
-                        Evaluating software and container debloating techniques across correctness, CVE mitigation,
-                        attack-surface reduction, and usability.
+                        My work examines container debloating tools and approaches using language models and coverage
+                        analysis.
                     </p>
+                    <div class="inline-links">
+                        <a href="https://www.csl.sri.com/users/gehani/papers/SecDev-2023.Debloat.pdf" target="_blank"
+                            rel="noopener noreferrer">SecDev 2023</a>
+                    </div>
                 </article>
             </div>
         </section>
 
         <section class="section" id="publications" aria-labelledby="publications-title">
             <div class="section__header">
-                <p class="eyebrow">Publications</p>
-                <h2 id="publications-title">Publications.</h2>
+                <h2 id="publications-title">Publications</h2>
             </div>
             <ol class="publication-list">
-                <article class="publication">
+                <li class="publication">
                     <p class="publication__venue">PACMPL 10(OOPSLA1), 2026</p>
                     <h3>Taming the Hydra: Targeted Control-Flow Transformations for Dynamic Symbolic Execution</h3>
                     <p>
-                        Charitha Saumya, <strong>Muhammad Hassan</strong>, Rohan Gangaraju, Milind Kulkarni,
+                        Charitha Saumya*, <strong>Muhammad Hassan</strong>*, Rohan Gangaraju, Milind Kulkarni,
                         Kirshanthan Sundararajah.
                     </p>
+                    <p class="publication__note">* These authors contributed equally.</p>
+                    <p class="publication__note">The artifact received the Functional, Reusable, and Results Reproduced badges.</p>
                     <div class="inline-links">
                         <a href="https://dl.acm.org/doi/10.1145/3798202" target="_blank"
                             rel="noopener noreferrer">Paper</a>
@@ -155,28 +175,67 @@
                             rel="noopener noreferrer">Artifact</a>
                         <a href="viz-merge.html" class="viz-link">▶ Visualization</a>
                     </div>
-                </article>
-                <article class="publication">
+                </li>
+                <li class="publication">
+                    <p class="publication__venue">SPLASH/ISSTA Student Research Competition, 2026 (Extended abstract)</p>
+                    <h3>ThunderFork: Splitting SMT Queries with Targeted Control-Flow Transformations</h3>
+                    <p>
+                        <strong>Muhammad Hassan</strong>.
+                    </p>
+                    <div class="inline-links">
+                        <a href="https://dl.acm.org/doi/10.1145/3837729.3839577" target="_blank"
+                            rel="noopener noreferrer">Extended abstract</a>
+                    </div>
+                </li>
+                <li class="publication">
                     <p class="publication__venue">IEEE Secure Development Conference 2023</p>
                     <h3>Evaluating Container Debloaters</h3>
                     <p>
-                        <strong>Muhammad Hassan</strong>, T. Tahir, M. Farrukh, A. Naveed, A. Naeem, F. Shaon,
-                        F. Zaffar, A. Gehani, S. Rahaman.
+                        <strong>Muhammad Hassan</strong>*, Talha Tahir*, Muhammad Farrukh, Abdullah Naveed, Anas Naeem,
+                        Fareed Zaffar, Fahad Shaon, Ashish Gehani, Sazzadur Rahaman.
                     </p>
+                    <p class="publication__note">* These authors contributed equally.</p>
                     <div class="inline-links">
                         <a href="https://www.csl.sri.com/users/gehani/papers/SecDev-2023.Debloat.pdf" target="_blank"
                             rel="noopener noreferrer">Paper</a>
                         <a href="https://github.com/sprlab/debloat-bench" target="_blank"
                             rel="noopener noreferrer">Code</a>
                     </div>
-                </article>
+                </li>
             </ol>
+        </section>
+
+        <section class="section" id="honors" aria-labelledby="honors-title">
+            <div class="section__header">
+                <h2 id="honors-title">Honors and Presentations</h2>
+            </div>
+            <div class="section__body">
+                <h3 class="subhead">Honors</h3>
+                <ul class="news-list">
+                    <li>
+                        <span>May 2026</span>
+                        Pratt Fellowship, Virginia Tech
+                    </li>
+                </ul>
+                <h3 class="subhead">Talks</h3>
+                <ul class="news-list">
+                    <li>
+                        <span>Oct 2026</span>
+                        Taming the Hydra: Targeted Control-Flow Transformations for Dynamic Symbolic Execution.
+                        Talk, OOPSLA 2026
+                    </li>
+                    <li>
+                        <span>Oct 2026</span>
+                        ThunderFork: Splitting SMT Queries with Targeted Control-Flow Transformations.
+                        Poster and talk, SPLASH/ISSTA Student Research Competition
+                    </li>
+                </ul>
+            </div>
         </section>
 
         <section class="section section--split" id="experience" aria-labelledby="experience-title">
             <div class="section__header">
-                <p class="eyebrow">Research Experience & Artifacts</p>
-                <h2 id="experience-title">Academic work, systems, and evaluation artifacts.</h2>
+                <h2 id="experience-title">Experience</h2>
             </div>
             <div class="experience-body">
                 <div class="timeline">
@@ -186,8 +245,8 @@
                             <p class="meta">Virginia Tech · Jan 2025 - Present</p>
                         </div>
                         <p>
-                            Investigating compiler transformations for constant-time code and control-flow merging, with
-                            experimental evaluation in LLVM and KLEE.
+                            I develop LLVM transformations for symbolic execution and parallel SMT solving. I also
+                            investigate compiler transformations for constant-time code.
                         </p>
                     </article>
                     <article class="timeline-item">
@@ -196,8 +255,8 @@
                             <p class="meta">Aerodyne Group · Jul 2023 - Dec 2024</p>
                         </div>
                         <p>
-                            Developed interactive 2D/3D annotation systems for digital-twin models, including rendering
-                            optimizations and synchronized spatial transformations.
+                            I developed interactive 2D and 3D annotation tools for digital twins. I improved rendering
+                            performance from 15 to 240 frames per second.
                         </p>
                     </article>
                     <article class="timeline-item">
@@ -206,18 +265,20 @@
                             <p class="meta">Lahore University of Management Sciences · Jan 2023 - Oct 2024</p>
                         </div>
                         <p>
-                            Studied Docker image debloating through benchmarking, correctness testing, CVE analysis, and
-                            security-focused evaluation.
+                            I developed and evaluated BloatProfiler, a framework for benchmarking Docker image
+                            debloating.
                         </p>
                     </article>
                 </div>
-                <div class="artifact-list" aria-label="Research code and artifacts">
-                    <h3>Research Code & Artifacts</h3>
+                <div class="artifact-list" aria-label="Research projects">
+                    <h3>Research Projects</h3>
                     <ul>
                         <li>
-                            <span>Control Flow Transformations for Symbolic Execution</span>
-                            <p>Targeted compiler transformations for mitigating path explosion in dynamic symbolic
-                                execution. Code and experiment scripts are available with the OOPSLA artifact.</p>
+                            <span>Control-Flow Transformations for Symbolic Execution</span>
+                            <p>LLVM transformations reduce path explosion in KLEE. Selected kernels completed symbolic
+                                execution in seconds, while unmodified KLEE timed out after one hour. On libosip 4.0.0,
+                                KLEE found a bug in approximately 18.5–20.2 hours after transformation, while the original
+                                programs reached the 24-hour timeout.</p>
                             <div class="inline-links">
                                 <a href="https://dl.acm.org/doi/10.1145/3798202" target="_blank"
                                     rel="noopener noreferrer">Paper</a>
@@ -226,9 +287,24 @@
                             </div>
                         </li>
                         <li>
-                            <span>Debloat Bench</span>
-                            <p>Benchmarking framework for evaluating debloating correctness, size reduction, security,
-                                and time.</p>
+                            <span>ThunderFork for Parallel SMT Solving</span>
+                            <p>ThunderFork uses cost-guided control-flow transformations to split SMT queries for
+                                parallel solving. Across 44 benchmarks, it was faster than Z3 on 25, tied on 18,
+                                and slower on one. Compared with cvc5, it was faster on 17 benchmarks and tied on nine.
+                                Both ThunderFork and cvc5 timed out on the remaining 18.</p>
+                            <div class="inline-links">
+                                <a href="https://dl.acm.org/doi/10.1145/3837729.3839577" target="_blank"
+                                    rel="noopener noreferrer">Extended abstract</a>
+                            </div>
+                        </li>
+                        <li>
+                            <span>Constant-Time Code</span>
+                            <p>I am developing compiler transformations for constant-time code.</p>
+                        </li>
+                        <li>
+                            <span>Debloat Bench (BloatProfiler)</span>
+                            <p>A framework for evaluating functional correctness, vulnerability mitigation, and image
+                                size reduction in container debloating.</p>
                             <div class="inline-links">
                                 <a href="https://github.com/sprlab/debloat-bench" target="_blank"
                                     rel="noopener noreferrer">Code</a>
@@ -236,47 +312,74 @@
                                     target="_blank" rel="noopener noreferrer">Paper</a>
                             </div>
                         </li>
+                        <li>
+                            <span>LLM-Based Debloating</span>
+                            <p>This pipeline combines language models, retrieval-augmented generation, and LLVM
+                                coverage analysis for software debloating.</p>
+                        </li>
                     </ul>
                 </div>
             </div>
         </section>
 
+        <section class="section" id="teaching" aria-labelledby="teaching-title">
+            <div class="section__header">
+                <h2 id="teaching-title">Teaching</h2>
+            </div>
+            <div class="timeline">
+                <article class="timeline-item">
+                    <div>
+                        <h3>CS 5244 Web Application Development</h3>
+                        <p class="meta">Virginia Tech · Fall 2025, Fall 2026</p>
+                    </div>
+                    <p>Graduate Teaching Assistant</p>
+                </article>
+                <article class="timeline-item">
+                    <div>
+                        <h3>CS 4804 Introduction to Artificial Intelligence</h3>
+                        <p class="meta">Virginia Tech · Spring 2026</p>
+                    </div>
+                    <p>Graduate Teaching Assistant</p>
+                </article>
+            </div>
+        </section>
+
         <section class="section" id="skills" aria-labelledby="skills-title">
             <div class="section__header">
-                <p class="eyebrow">Skills</p>
-                <h2 id="skills-title">Research and engineering toolkit.</h2>
+                <h2 id="skills-title">Technical Skills</h2>
             </div>
             <div class="skills-grid">
                 <article class="skill-group">
-                    <h3>Research Tools</h3>
-                    <p>LLVM/Clang, KLEE, SMT solvers, program analysis, Docker, Vagrant</p>
+                    <h3>Compilers and Program Analysis</h3>
+                    <p>LLVM, Clang, KLEE, static analysis, symbolic execution</p>
+                </article>
+                <article class="skill-group">
+                    <h3>SMT Solvers and Tools</h3>
+                    <p>Z3, cvc5, STP, SMT-LIB</p>
                 </article>
                 <article class="skill-group">
                     <h3>Languages</h3>
-                    <p>Python, C/C++, Assembly, JavaScript, Solidity, Haskell</p>
+                    <p>C, C++, Python, assembly, JavaScript, TypeScript, Solidity, Haskell</p>
                 </article>
                 <article class="skill-group">
-                <h3>ML & Web Frameworks</h3>
-                    <p>Angular, React, Node, Django, TensorFlow, PyTorch, OpenCV</p>
+                    <h3>Systems and Tools</h3>
+                    <p>Linux, Git, Docker, Vagrant, CMake, Bash, PostgreSQL</p>
                 </article>
                 <article class="skill-group">
-                    <h3>Systems & Design</h3>
-                    <p>Linux, shell scripting, PostgreSQL, Three.js, Konva.js, Figma</p>
+                    <h3>Web and ML Tools</h3>
+                    <p>Angular, React, Node.js, Django, TensorFlow, PyTorch, OpenCV</p>
                 </article>
             </div>
         </section>
 
         <section class="contact" id="contact" aria-labelledby="contact-title">
-            <p class="eyebrow">Contact</p>
-            <h2 id="contact-title">Open to research conversations and collaborations.</h2>
+            <h2 id="contact-title">Contact</h2>
             <p>
-                The easiest way to reach me is by email. You can also find my work and professional profile through the
-                links below.
+                For research inquiries or collaborations, email me at mhassan01@vt.edu.
             </p>
             <div class="hero__actions">
                 <a class="button button--primary" href="mailto:mhassan01@vt.edu">mhassan01@vt.edu</a>
-                <a class="button button--quiet" href="resume.pdf" target="_blank" rel="noopener noreferrer">Resume
-                    PDF</a>
+                <a class="button button--quiet" href="resume.pdf" target="_blank" rel="noopener noreferrer">CV</a>
             </div>
         </section>
     </main>
@@ -284,7 +387,7 @@
     <footer class="site-footer">
         <p>&copy; 2026 Muhammad Hassan</p>
         <div class="footer-links">
-            <a href="https://scholar.google.com/citations?user=fqTwNSYAAAAJ&hl=en" target="_blank"
+            <a href="https://scholar.google.com/citations?user=fqTwNSYAAAAJ&amp;hl=en" target="_blank"
                 rel="noopener noreferrer">Scholar</a>
             <a href="https://github.com/hassanaleem" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/hassanaleem1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
