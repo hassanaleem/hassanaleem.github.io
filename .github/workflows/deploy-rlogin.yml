@@ -1,0 +1,39 @@
+name: Deploy to people.cs.vt.edu
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-rlogin
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      REMOTE_USER: mhassan01
+      REMOTE_HOST: rlogin.cs.vt.edu
+      REMOTE_DIR: /web/people/mhassan01
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.RLOGIN_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
+
+      - name: Copy site files
+        run: |
+          rsync -avz \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --no-owner --no-group \
+            --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" \
+            ./ "$REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/"
