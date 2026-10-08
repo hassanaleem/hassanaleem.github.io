@@ -291,15 +291,9 @@ h3 {
 .hero-card {
     position: relative;
     justify-self: end;
-}
-
-.hero-card::before {
-    content: "";
-    position: absolute;
-    inset: 12px -12px -12px 12px;
-    border: 2px solid var(--accent);
-    border-radius: 20px;
-    opacity: 0.55;
+    padding: 8px;
+    border: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+    border-radius: 28px;
 }
 
 .profile-photo {
